@@ -1,6 +1,11 @@
 from PIL import Image
 from pyffmpeg import FFmpeg
 
+def CheckSupport(Extension : str, SupportList : list):
+    if Extension not in SupportList:
+        return False
+    return True
+
 SupportedImageFiles = [
     "jpg",
     "png",
@@ -10,9 +15,7 @@ SupportedImageFiles = [
 ]
 
 def CheckImageSupport(Extension : str):
-    if Extension not in SupportedImageFiles:
-        return False
-    return True
+    return CheckSupport(Extension, SupportedImageFiles)
 
 def ConvertImageWithRGB(Source : str, Destination : str):
     with Image.open(Source) as File:
@@ -35,3 +38,40 @@ def ConvertImage(Source : str, Destination : str):
     
     return ConvertImageWithoutRGB(Source, Destination)
 
+SupportedAudioFiles = [
+    "mp2",
+    "mp3",
+    "wav"
+]
+
+FFmpegClient = FFmpeg()
+
+def CheckAudioSupport(Extension : str):
+    return CheckSupport(Extension, SupportedAudioFiles)
+
+def ConvertAudio(Source : str, Destination : str):
+    SourceExtension = Source.split(".")[-1]
+    DestinationExtension = Source.split(".")[-1]
+
+    if not CheckAudioSupport(SourceExtension): return
+    if not CheckAudioSupport(DestinationExtension): return
+
+    FFmpegClient.convert(Source, Destination)
+
+SupportedVideoFiles = [
+    "mp4",
+    "mkv",
+    "mov"
+]
+
+def CheckVideoSupport(Extension : str):
+    return CheckSupport(Extension, SupportedVideoFiles)
+
+def ConvertVideo(Source : str, Destination : str):
+    SourceExtension = Source.split(".")[-1]
+    DestinationExtension = Source.split(".")[-1]
+
+    if not CheckVideoSupport(SourceExtension): return
+    if not CheckVideoSupport(DestinationExtension): return
+
+    FFmpegClient.convert(Source, Destination)
