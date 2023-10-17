@@ -28,11 +28,11 @@ def ConvertImageWithoutRGB(Source : str, Destination : str):
 
 def ConvertImage(Source : str, Destination : str):
     SourceExtension = Source.split(".")[-1]
-    DestinationExtension = Source.split(".")[-1]
+    DestinationExtension = Destination.split(".")[-1]
 
     if not CheckImageSupport(SourceExtension): return
     if not CheckImageSupport(DestinationExtension): return
-
+    
     if (DestinationExtension == "jpg"):
         return ConvertImageWithRGB(Source, Destination)
     
