@@ -1,0 +1,4 @@
+Packages = [
+    "pyffmpeg",
+    "Pillow"
+]
