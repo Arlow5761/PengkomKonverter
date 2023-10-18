@@ -1,10 +1,28 @@
 from PIL import Image
 from pyffmpeg import FFmpeg
+from docx2pdf import convert as Convert2PDF
 
 def CheckSupport(Extension : str, SupportList : list):
     if Extension not in SupportList:
         return False
     return True
+
+def GetExtension(File : str):
+    return File.split(".")[-1]
+
+def CheckFileGroup(File : str):
+    Extension = GetExtension(File)
+
+    if Extension in SupportedImageFiles:
+        return "Image"
+    
+    if Extension in SupportedAudioFiles:
+        return "Audio"
+    
+    if Extension in SupportedVideoFiles:
+        return "Video"
+    
+    return "Unknown"
 
 SupportedImageFiles = [
     "jpg",
@@ -75,3 +93,30 @@ def ConvertVideo(Source : str, Destination : str):
     if not CheckVideoSupport(DestinationExtension): return
 
     FFmpegClient.convert(Source, Destination)
+
+def ConvertImageToPdf(Source : str, Destination : str):
+    SourceExtension = GetExtension(Source)
+    DestinationExtension = GetExtension(Destination)
+
+    if not CheckImageSupport(SourceExtension): return
+    if (DestinationExtension != "pdf"): return
+
+    ConvertImageWithRGB(Source, Destination)
+
+def ConvertVideoToAudio(Source : str, Destination : str):
+    SourceExtension = GetExtension(Source)
+    DestinationExtension = GetExtension(Destination)
+
+    if not CheckVideoSupport(SourceExtension): return
+    if not CheckAudioSupport(DestinationExtension): return
+
+    FFmpegClient.convert(Source, Destination)
+
+def ConvertDocxtoPdf(Source : str, Destination : str):
+    SourceExtension = GetExtension(Source)
+    DestinationExtension = GetExtension(Destination)
+
+    if (SourceExtension != "docx"): return
+    if (DestinationExtension != "pdf"): return
+
+    Convert2PDF(Source, Destination)
