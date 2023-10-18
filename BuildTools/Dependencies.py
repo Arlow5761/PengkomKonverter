@@ -1,5 +1,7 @@
 Packages = [
     "pyffmpeg",
     "Pillow",
-    "openai-whisper"
+    "openai-whisper",
+    "pytube",
+    "docx2pdf"
 ]
