@@ -10,7 +10,7 @@ def CheckSupport(Extension : str, SupportList : list):
 def GetExtension(File : str):
     return File.split(".")[-1]
 
-def CheckFileGroup(File : str):
+def GetFileGroup(File : str):
     Extension = GetExtension(File)
 
     if Extension in SupportedImageFiles:
