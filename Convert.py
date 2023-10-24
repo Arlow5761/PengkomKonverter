@@ -28,7 +28,7 @@ def CheckSupport(Extension : str, SupportList : list):
     return True
 
 def GetExtension(File : str):
-    return File.split(".")[-1]
+    return File.split(".")[-1].lower()
 
 def GetFileGroup(File : str):
     Extension = GetExtension(File)
