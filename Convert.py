@@ -2,6 +2,26 @@ from PIL import Image
 from pyffmpeg import FFmpeg
 from docx2pdf import convert as Convert2PDF
 
+SupportedImageFiles = [
+    "jpg",
+    "png",
+    "bmp",
+    "gif",
+    "webp"
+]
+
+SupportedAudioFiles = [
+    "mp2",
+    "mp3",
+    "wav"
+]
+
+SupportedVideoFiles = [
+    "mp4",
+    "mkv",
+    "mov"
+]
+
 def CheckSupport(Extension : str, SupportList : list):
     if Extension not in SupportList:
         return False
@@ -25,15 +45,10 @@ def GetFileGroup(File : str):
     if (Extension == "pdf"):
         return "PDF"
     
+    if (Extension == "docx"):
+        return "Docx"
+    
     return "Unknown"
-
-SupportedImageFiles = [
-    "jpg",
-    "png",
-    "bmp",
-    "gif",
-    "webp"
-]
 
 def CheckImageSupport(Extension : str):
     return CheckSupport(Extension, SupportedImageFiles)
@@ -58,22 +73,13 @@ def ConvertImageWithoutRGB(Source : str, Destination : str):
         return False
 
 def ConvertImage(Source : str, Destination : str):
-    SourceExtension = Source.split(".")[-1]
-    DestinationExtension = Destination.split(".")[-1]
-
-    if not CheckImageSupport(SourceExtension): return False
-    if not CheckImageSupport(DestinationExtension): return False
+    if (GetFileGroup(Source) != "Image"): return False
+    if (GetFileGroup(Destination) != "Image"): return False
     
-    if (DestinationExtension == "jpg"):
+    if (GetExtension(Destination) == "jpg"):
         return ConvertImageWithRGB(Source, Destination)
     
     return ConvertImageWithoutRGB(Source, Destination)
-
-SupportedAudioFiles = [
-    "mp2",
-    "mp3",
-    "wav"
-]
 
 FFmpegClient = FFmpeg()
 
@@ -81,11 +87,8 @@ def CheckAudioSupport(Extension : str):
     return CheckSupport(Extension, SupportedAudioFiles)
 
 def ConvertAudio(Source : str, Destination : str):
-    SourceExtension = Source.split(".")[-1]
-    DestinationExtension = Source.split(".")[-1]
-
-    if not CheckAudioSupport(SourceExtension): return False
-    if not CheckAudioSupport(DestinationExtension): return False
+    if (GetFileGroup(Source) != "Audio"): return False
+    if (GetFileGroup(Destination) != "Audio"): return False
 
     try:
         FFmpegClient.convert(Source, Destination)
@@ -93,21 +96,12 @@ def ConvertAudio(Source : str, Destination : str):
     except:
         return False
 
-SupportedVideoFiles = [
-    "mp4",
-    "mkv",
-    "mov"
-]
-
 def CheckVideoSupport(Extension : str):
     return CheckSupport(Extension, SupportedVideoFiles)
 
 def ConvertVideo(Source : str, Destination : str):
-    SourceExtension = Source.split(".")[-1]
-    DestinationExtension = Source.split(".")[-1]
-
-    if not CheckVideoSupport(SourceExtension): return False
-    if not CheckVideoSupport(DestinationExtension): return False
+    if (GetFileGroup(Source) != "Video"): return False
+    if (GetFileGroup(Destination) != "Video"): return False
 
     try:
         FFmpegClient.convert(Source, Destination)
@@ -116,11 +110,8 @@ def ConvertVideo(Source : str, Destination : str):
         return False
 
 def ConvertImageToPdf(Source : str, Destination : str):
-    SourceExtension = GetExtension(Source)
-    DestinationExtension = GetExtension(Destination)
-
-    if not CheckImageSupport(SourceExtension): return False
-    if (DestinationExtension != "pdf"): return False
+    if (GetFileGroup(Source) != "Image"): return False
+    if (GetFileGroup(Destination) != "PDF"): return False
 
     try:
         ConvertImageWithRGB(Source, Destination)
@@ -129,11 +120,8 @@ def ConvertImageToPdf(Source : str, Destination : str):
         return False
 
 def ConvertVideoToAudio(Source : str, Destination : str):
-    SourceExtension = GetExtension(Source)
-    DestinationExtension = GetExtension(Destination)
-
-    if not CheckVideoSupport(SourceExtension): return False
-    if not CheckAudioSupport(DestinationExtension): return False
+    if (GetFileGroup(Source) != "Video"): return False
+    if (GetFileGroup(Destination) != "Audio"): return False
 
     try:
         FFmpegClient.convert(Source, Destination)
@@ -142,11 +130,8 @@ def ConvertVideoToAudio(Source : str, Destination : str):
         return False
 
 def ConvertDocxtoPdf(Source : str, Destination : str):
-    SourceExtension = GetExtension(Source)
-    DestinationExtension = GetExtension(Destination)
-
-    if (SourceExtension != "docx"): return
-    if (DestinationExtension != "pdf"): return
+    if (GetFileGroup(Source) != "Docx"): return False
+    if (GetFileGroup(Destination) != "PDF"): return False
 
     try:
         Convert2PDF(Source, Destination)
