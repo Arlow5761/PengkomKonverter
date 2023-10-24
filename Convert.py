@@ -39,17 +39,21 @@ def ConvertImageWithRGB(Source : str, Destination : str):
     with Image.open(Source) as File:
         RGB_File = File.convert("RGB")
         RGB_File.save(Destination)
+    
+    return True
 
 def ConvertImageWithoutRGB(Source : str, Destination : str):
     with Image.open(Source) as File:
         File.save(Destination)
+    
+    return True
 
 def ConvertImage(Source : str, Destination : str):
     SourceExtension = Source.split(".")[-1]
     DestinationExtension = Destination.split(".")[-1]
 
-    if not CheckImageSupport(SourceExtension): return
-    if not CheckImageSupport(DestinationExtension): return
+    if not CheckImageSupport(SourceExtension): return False
+    if not CheckImageSupport(DestinationExtension): return False
     
     if (DestinationExtension == "jpg"):
         return ConvertImageWithRGB(Source, Destination)
@@ -71,10 +75,12 @@ def ConvertAudio(Source : str, Destination : str):
     SourceExtension = Source.split(".")[-1]
     DestinationExtension = Source.split(".")[-1]
 
-    if not CheckAudioSupport(SourceExtension): return
-    if not CheckAudioSupport(DestinationExtension): return
+    if not CheckAudioSupport(SourceExtension): return False
+    if not CheckAudioSupport(DestinationExtension): return False
 
     FFmpegClient.convert(Source, Destination)
+
+    return True
 
 SupportedVideoFiles = [
     "mp4",
@@ -89,28 +95,34 @@ def ConvertVideo(Source : str, Destination : str):
     SourceExtension = Source.split(".")[-1]
     DestinationExtension = Source.split(".")[-1]
 
-    if not CheckVideoSupport(SourceExtension): return
-    if not CheckVideoSupport(DestinationExtension): return
+    if not CheckVideoSupport(SourceExtension): return False
+    if not CheckVideoSupport(DestinationExtension): return False
 
     FFmpegClient.convert(Source, Destination)
+
+    return True
 
 def ConvertImageToPdf(Source : str, Destination : str):
     SourceExtension = GetExtension(Source)
     DestinationExtension = GetExtension(Destination)
 
-    if not CheckImageSupport(SourceExtension): return
-    if (DestinationExtension != "pdf"): return
+    if not CheckImageSupport(SourceExtension): return False
+    if (DestinationExtension != "pdf"): return False
 
     ConvertImageWithRGB(Source, Destination)
+
+    return True
 
 def ConvertVideoToAudio(Source : str, Destination : str):
     SourceExtension = GetExtension(Source)
     DestinationExtension = GetExtension(Destination)
 
-    if not CheckVideoSupport(SourceExtension): return
-    if not CheckAudioSupport(DestinationExtension): return
+    if not CheckVideoSupport(SourceExtension): return False
+    if not CheckAudioSupport(DestinationExtension): return False
 
     FFmpegClient.convert(Source, Destination)
+
+    return True
 
 def ConvertDocxtoPdf(Source : str, Destination : str):
     SourceExtension = GetExtension(Source)
@@ -120,3 +132,5 @@ def ConvertDocxtoPdf(Source : str, Destination : str):
     if (DestinationExtension != "pdf"): return
 
     Convert2PDF(Source, Destination)
+
+    return True
