@@ -22,6 +22,9 @@ def GetFileGroup(File : str):
     if Extension in SupportedVideoFiles:
         return "Video"
     
+    if (Extension == "pdf"):
+        return "PDF"
+    
     return "Unknown"
 
 SupportedImageFiles = [
