@@ -13,6 +13,6 @@ def Download():    # Input URL YouTube dan Folder Destination
     yd = yt.streams.get_highest_resolution()
     
     # Download the video to the folder destination
-    yd.download()
+    yd.download(uri)
     
     print("Download complete.")
