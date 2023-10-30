@@ -81,7 +81,7 @@ def ConvertImage(Source : str, Destination : str):
     
     return ConvertImageWithoutRGB(Source, Destination)
 
-FFmpegClient = FFmpeg()
+FFmpegClient = FFmpeg(enable_log=False)
 
 def CheckAudioSupport(Extension : str):
     return CheckSupport(Extension, SupportedAudioFiles)

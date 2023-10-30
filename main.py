@@ -1,6 +1,6 @@
 import Convert
 import transcribe
-import Downloader
+import Downloader as Downloader
 def Converter():
     print("Option 1: Convert selected")
     file_name = input("Enter the file name: ")
