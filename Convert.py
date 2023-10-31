@@ -2,6 +2,10 @@ from PIL import Image
 from pyffmpeg import FFmpeg
 from docx2pdf import convert as Convert2PDF
 
+#KAMUS:
+#SupportedImageFiles, SupportedAudioFiles, SupportedVideoFiles : string array
+#FFmpegClient : FFmpegObject
+
 SupportedImageFiles = [
     "jpg",
     "png",
@@ -23,14 +27,26 @@ SupportedVideoFiles = [
 ]
 
 def CheckSupport(Extension : str, SupportList : list):
+
+    #KAMUS LOKAL
+    #Extension, SupportList : string
+
     if Extension not in SupportList:
         return False
     return True
 
 def GetExtension(File : str):
+
+    #KAMUS LOKAL
+    #File : string
+
     return File.split(".")[-1].lower()
 
 def GetFileGroup(File : str):
+
+    #KAMUS LOKAL
+    #File, Extension : string
+
     Extension = GetExtension(File)
 
     if Extension in SupportedImageFiles:
@@ -51,9 +67,18 @@ def GetFileGroup(File : str):
     return "Unknown"
 
 def CheckImageSupport(Extension : str):
+
+    #KAMUS LOKAL
+    #Extension : string
+
     return CheckSupport(Extension, SupportedImageFiles)
 
 def ConvertImageWithRGB(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+    #File, RGB_File : Image
+
     try:
         with Image.open(Source) as File:
             RGB_File = File.convert("RGB")
@@ -64,6 +89,11 @@ def ConvertImageWithRGB(Source : str, Destination : str):
         return False
 
 def ConvertImageWithoutRGB(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+    #File : Image
+
     try:
         with Image.open(Source) as File:
             File.save(Destination)
@@ -73,6 +103,10 @@ def ConvertImageWithoutRGB(Source : str, Destination : str):
         return False
 
 def ConvertImage(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+
     if (GetFileGroup(Source) != "Image"): return False
     if (GetFileGroup(Destination) != "Image"): return False
     
@@ -84,9 +118,17 @@ def ConvertImage(Source : str, Destination : str):
 FFmpegClient = FFmpeg(enable_log=False)
 
 def CheckAudioSupport(Extension : str):
+
+    #KAMUS LOKAL
+    #Extension : string
+
     return CheckSupport(Extension, SupportedAudioFiles)
 
 def ConvertAudio(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+
     if (GetFileGroup(Source) != "Audio"): return False
     if (GetFileGroup(Destination) != "Audio"): return False
 
@@ -97,9 +139,17 @@ def ConvertAudio(Source : str, Destination : str):
         return False
 
 def CheckVideoSupport(Extension : str):
+
+    #KAMUS LOKAL
+    #Extension : string
+
     return CheckSupport(Extension, SupportedVideoFiles)
 
 def ConvertVideo(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+
     if (GetFileGroup(Source) != "Video"): return False
     if (GetFileGroup(Destination) != "Video"): return False
 
@@ -110,6 +160,10 @@ def ConvertVideo(Source : str, Destination : str):
         return False
 
 def ConvertImageToPdf(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+
     if (GetFileGroup(Source) != "Image"): return False
     if (GetFileGroup(Destination) != "PDF"): return False
 
@@ -120,6 +174,10 @@ def ConvertImageToPdf(Source : str, Destination : str):
         return False
 
 def ConvertVideoToAudio(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+
     if (GetFileGroup(Source) != "Video"): return False
     if (GetFileGroup(Destination) != "Audio"): return False
 
@@ -130,6 +188,10 @@ def ConvertVideoToAudio(Source : str, Destination : str):
         return False
 
 def ConvertDocxtoPdf(Source : str, Destination : str):
+
+    #KAMUS LOKAL
+    #Source, Destination : string
+
     if (GetFileGroup(Source) != "Docx"): return False
     if (GetFileGroup(Destination) != "PDF"): return False
 
