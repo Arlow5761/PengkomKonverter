@@ -1,6 +1,11 @@
 import whisper
 
 def transcribe(transcribing,transcribed):
+    #KAMUS LOKAL:
+    #model = whisper (string, boolean)
+    #result = array of string
+    #f = TextIOWrapper
+
     #Kasih 'import whisper' diatas function nya
     #Jangan lupa 'pip install whisper' dan 'pip install openai-whisper'
 
