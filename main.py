@@ -53,6 +53,6 @@ while selection:
         (Transcribe())
     elif choice == '3':
         (Download())
-    else:
+    elif choice == 4:
         print("Exiting the program.")
         selection = False
