@@ -1,7 +1,16 @@
 import Convert
 import transcribe
 import Downloader as Downloader
+
+#KAMUS
+#selection : bool
+#choice : string
+
 def Converter():
+
+    #KAMUS LOKAL
+    #file_name, output_format, output_file, file_group : string
+
     print("Option 1: Convert selected")
     file_name = input("Enter the file name: ")
     output_format = input("Enter the desired format (e.g., jpg, pdf, etc.): ")
@@ -27,6 +36,10 @@ def Converter():
     print("Convert finished")
 
 def Transcribe():
+
+    #KAMUS LOKAL
+    #file_name, output_format : string
+
     print("Option 2: Transcribe selected")
     file_name = input("Enter the file name: ")
     output_format = input("Enter the desired output file name: ")

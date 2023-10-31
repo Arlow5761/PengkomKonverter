@@ -17,13 +17,21 @@ SupportedImageFiles = [
 SupportedAudioFiles = [
     "mp2",
     "mp3",
-    "wav"
+    "wav",
+    "ogg",
+    "m4a",
+    "flac",
+    "aac",
+    "webm"
 ]
 
 SupportedVideoFiles = [
     "mp4",
     "mkv",
-    "mov"
+    "mov",
+    "avi",
+    "flv",
+    "webm"
 ]
 
 def CheckSupport(Extension : str, SupportList : list):
