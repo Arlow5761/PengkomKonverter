@@ -1,6 +1,11 @@
 from pytube import YouTube
 
 def Download():    # Input URL YouTube dan Folder Destination
+   
+    # KAMUS LOKAL
+    # url, uri      : string
+    # yt, yd        : pytube object
+
     url = input("Enter the YouTube URL: ")
     uri = input("Folder Destination: ")
 
